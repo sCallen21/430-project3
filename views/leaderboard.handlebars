@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Cthulhu Clicker</title>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <link rel="shortcut icon" href="/assets/img/favicon.png"/>
+  <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
+</head>
+<body>
+  <div class="wrapper">
+  <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
+    <div class="navlink"><a href="/logout">Log out</a></div>
+    <div class="navlink"><a href="/game">Game</a></div>
+    <div class="navlink"><a href="/changePW">Change Password</a></div>
+    <div class="navlink"><a href="/rules">Guide</a></div>
+  </nav>
+  <section id="leaderboard">
+    <div id="godList">
+    {{#if gods}}
+        {{#each gods}}
+          <div class="godEntry">
+            <p class="godName"><span class="label">Name:</span> {{this.name}}</p>
+            <p class="godScore"><span class="label">Total Praise:</span> {{number this.totalPraise "0.00"}}</p>
+          </div>
+        {{/each}}
+      {{else}}
+        <h3 class="empty">No Players Currently</h3>
+      {{/if}}
+    </div>
+  </section>
+    <div class="push"></div>
+  </div>
+  <footer>
+    Stephen Callen | 2018
+  </footer>
+  <script src="/assets/bundle.js"></script>
+</body>
+</html>
