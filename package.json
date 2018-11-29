@@ -8,8 +8,11 @@
   "description": "A Simple Login Example using Node.js, Mongo and Redis",
   "main": "./server/app.js",
   "scripts": {
-    "build": "babel ./client/client.js --out-file ./hosted/bundle.js",
-    "watch": "babel --watch ./client/client.js --out-file ./hosted/bundle.js",
+    "buildLoginBundle": "babel ./client/login ./client/helper --presets react --out-file ./hosted/loginBundle.js",
+    "buildAppBundle": "babel ./client/app ./client/helper --presets react --out-file ./hosted/bundle.js",
+    "build": "npm run buildLoginBundle && npm run buildAppBundle && npm run buildGame",
+    "watchLoginBundle": "babel --watch ./client/login ./client/helper --presets react --out-file ./hosted/loginBundle.js",
+    "watchAppBundle": "babel --watch ./client/app ./client/helper --presets react --out-file ./hosted/bundle.js",
     "buildGame": "babel ./client/game.js --out-file ./hosted/gameBundle.js",
     "watchGame": "babel --watch ./client/game.js --out-file ./hosted/gameBundle.js",
     "nodemon": "nodemon --watch ./server ./server/app.js",
