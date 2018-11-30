@@ -25,7 +25,7 @@ const handleSignup = (e) => {
     return false;
   }
   
-  if($("#pass").val() == $("#pass2").val()){
+  if($("#pass").val() != $("#pass2").val()){
     handleError("Passwords do not match");
     return false;
   }
@@ -66,18 +66,54 @@ const SignupWindow = (props) => {
     <label htmlFor="pass">Password: </label>
     <input id="pass" type="password" name="pass" placeholder="password"/>
     <label htmlFor="pass2">Password: </label>
-    <input id="pass" type="password" name="pass" placeholder="tetype password"/>
+    <input id="pass2" type="password" name="pass2" placeholder="retype password"/>
     <label htmlFor="name">God Name: </label>
     <input id="name" type="text" name="name" placeholder="name your Elder God"/>
     <input type="hidden" name="_csrf" value={props.csrf}/>
-    <input className="formSubmit" type="submit" value="Sign in"/>
+    <input className="formSubmit" type="submit" value="Sign up"/>
   </form>
   );
 };
 
 const createLoginWindow = (csrf) => {
   ReactDOM.render(
-    <LoginWindow csrf={csrf}/>
-    document.querySelector("#content");
+    <LoginWindow csrf={csrf}/>,
+    document.querySelector("#content")
   );
 };
+
+const createSignupWindow = (csrf) => {
+  ReactDOM.render(
+    <SignupWindow csrf={csrf}/>,
+    document.querySelector("#content")
+  );
+};
+
+const setup = (csrf) => {
+  const loginButton = document.querySelector("#loginButton");
+  const signupButton = document.querySelector("#signupButton");
+  
+  signupButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    createSignupWindow(csrf);
+    return false;
+  });
+  
+  loginButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    createLoginWindow(csrf);
+    return false;
+  });
+  
+  createLoginWindow(csrf); //default view
+};
+
+const getToken = () => {
+  sendAjax('GET', '/getToken', null, (result) => {
+    setup(result.csrfToken);
+  });
+};
+
+$(document).ready(function() {
+  getToken();
+});

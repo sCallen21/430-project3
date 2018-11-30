@@ -456,7 +456,6 @@ const getData = () => {
     },
     error: (xhr, status, error) => {
       const messageObj = JSON.parse(xhr.responseText);
-
       handleError(messageObj.error);
     }
   });
@@ -533,4 +532,4 @@ const init = () => {
   gameLoop();
 };
 
-window.addEventListener("load",init);
+//window.addEventListener("load",init);

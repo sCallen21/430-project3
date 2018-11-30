@@ -14,50 +14,14 @@
 <body>
   <div class="wrapper">
   <nav><a href="/login"><img id="logo" src="/assets/img/face.png" alt="face logo"/></a>
-    <div class="navlink"><a href="/logout">Log out</a></div>
-    <div class="navlink"><a href="/changePW">Change Password</a></div>
-    <div class="navlink"><a href="/rules">Guide</a></div>
-    <div class="navlink"><a href="/leaderboard">Leaderboard</a></div>
+    <div class="navlink" id="logoutButton"><a href="/logout">Log out</a></div>
+    <div class="navlink" id="gameButton"><a href="/game">Game</a></div>
+    <div class="navlink" id="changePWButton"><a href="/changePW">Change Password</a></div>
+    <div class="navlink" id="guideButton"><a href="/rules">Guide</a></div>
+    <div class="navlink" id="leaderboardButton"><a href="/leaderboard">Leaderboard</a></div>
   </nav>
-  <section class="hide">
-    <img id="bgImg" src="/assets/img/background.png" alt="bg"/>
-    <img id="fishImg" src="/assets/img/fish.png" alt="fish"/>
-    <img id="shogImg" src="/assets/img/shoggoth.png" alt="shog"/>
-    <img id="deeponeImg" src="/assets/img/deepone.png" alt="deep"/>
-    <img id="spawnImg" src="/assets/img/starspawn.png" alt="star"/>
-    <img id="thingImg" src="/assets/img/elderthing.png" alt="thing"/>
-    <img id="statueImg" src="/assets/img/statue.png" alt="statue"/>
-    <p class="lunch">Lunchtime</p>
-    <p id="ppsE"></p>
-    <p id="tpE"></p>
-    <p id="fishE"></p>
-    <p id="shogE"></p>
-    <p id="deepE"></p>
-    <p id="starE"></p>
-    <p id="thingE"></p>
-    <p id="buff1E"></p>
-    <p id="buff2E"></p>
-    <p id="buff3E"></p>
-  </section>
-  <section id="gameContent">
-    <div class="gameContent">
-      {{#if gods}}
-        {{#each gods}}
-          <div class="god">
-            <h3 class="godName">Welcome back {{this.name}}</h3>
-            <input id="godID" type="hidden" value={{this._id}} />
-          </div>
-        {{/each}}
-      {{else}}
-        <h3 class="emptyGods">No Gods Yet</h3>
-      {{/if}}
-    </div>
-    <canvas id="myCanvas" width="590" height="240">Support Canvas or perish</canvas>
-    <form id="saveForm" name="saveForm" action="/gameSave" method="POST" class="mainForm">
-      <input id="csrfToken" type="hidden" name="_csrf" value={{csrfToken}} />
-      <input class="formSubmit" type="submit" value="Save" />
-    </form>
-  </section>
+    <section id="gameGoesHere"></section>
+    <section id="saveForm"></section>
     <div class="push"></div>
   </div>
   <footer>
@@ -66,7 +30,7 @@
   <div id="domoMessage"><img id="speech" src="/assets/img/marble.png" alt="speech box"/>
     <h3><span id="errorMessage"></span></h3>
   </div>
-  <script src="/assets/bundle.js"></script>
   <script src="/assets/gameBundle.js"></script>
+  <script src="/assets/bundle.js"></script>
 </body>
 </html>

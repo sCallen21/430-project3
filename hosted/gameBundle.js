@@ -514,7 +514,6 @@ var getData = function getData() {
     },
     error: function error(xhr, status, _error) {
       var messageObj = JSON.parse(xhr.responseText);
-
       handleError(messageObj.error);
     }
   });
@@ -587,4 +586,4 @@ var init = function init() {
   gameLoop();
 };
 
-window.addEventListener("load", init);
+//window.addEventListener("load",init);

@@ -2,7 +2,8 @@ const models = require('../models');
 const ElderGod = models.ElderGod;
 
 // renders gamepage with csrfToken and the god name
-const gamePage = (req, res) => {
+const gamePage = (req, res) =>
+  /*
   ElderGod.ElderGodModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
       console.log(err);
@@ -11,7 +12,8 @@ const gamePage = (req, res) => {
     // put if here to check for json or html. If json, do res.json, if html, do res.render
     return res.render('app', { csrfToken: req.csrfToken(), gods: docs });
   });
-};
+  */
+   res.render('app');
 
 // makes a new game. Is called by Account controller at signup
 const newGame = (req, res) => {
@@ -39,7 +41,7 @@ const newGame = (req, res) => {
 // gets data about the god by the god's id
 const getData = (req, res) => ElderGod.ElderGodModel.findById(req.query.id, (err, doc) => {
   if (err) {
-    console.log('error');
+    console.dir(err);
     return res.json({ err }); // if error, return it
   }
 
@@ -48,6 +50,16 @@ const getData = (req, res) => ElderGod.ElderGodModel.findById(req.query.id, (err
   }
 
   return res.json(doc);
+});
+
+const getGod = (req, res) =>
+ElderGod.ElderGodModel.findByOwner(req.session.account._id, (err, docs) => {
+  if (err) {
+    console.log(err);
+    return res.status(400).json({ error: 'An error occured' });
+  }
+
+  return res.json({ god: docs });
 });
 
 // records player's current score of all numbers
@@ -115,3 +127,4 @@ module.exports.newGame = newGame;
 module.exports.saveGame = saveGame;
 module.exports.getData = getData;
 module.exports.leaderboard = leaderboardPage;
+module.exports.getGod = getGod;

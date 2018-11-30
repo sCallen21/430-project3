@@ -18,8 +18,7 @@ const sendAjax = (type, action, data, callback) => {
     success: callback,
     error: (xhr, status, error) => {
       const messageObj = JSON.parse(xhr.responseText);
-
       handleError(messageObj.error);
     }
-  });        
+  });
 };

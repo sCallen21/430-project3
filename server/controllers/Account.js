@@ -136,15 +136,15 @@ const changePW = (request, response) => {
   });
 };
 
-//used to get csrf token when needed
+// used to get csrf token when needed
 const getToken = (request, response) => {
   const req = request;
   const res = response;
-  
+
   const csrfJSON = {
     csrfToken: req.csrfToken(),
   };
-  
+
   res.json(csrfJSON);
 };
 
