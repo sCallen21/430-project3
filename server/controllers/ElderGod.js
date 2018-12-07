@@ -110,15 +110,15 @@ const saveGame = (req, res) => {
   });
 };
 
-// shows leaderboard page, sorts all gods by total praise, then lists them out using handlebars
-const leaderboardPage = (req, res) => {
+// shows leaderboard page, sorts all gods by total praise, then lists them out using react
+const getLeaderboard = (req, res) => {
   ElderGod.ElderGodModel.find({}, (err, docs) => {
     if (err) {
       console.log(err);
       return res.status(400).json({ error: 'An error occurred' });
     }
     docs.sort((a, b) => b._doc.totalPraise - a._doc.totalPraise);
-    return res.render('leaderboard', { csrfToken: req.csrfToken(), gods: docs });
+    return res.json({ gods: docs });
   });
 };
 
@@ -126,5 +126,5 @@ module.exports.gamePage = gamePage;
 module.exports.newGame = newGame;
 module.exports.saveGame = saveGame;
 module.exports.getData = getData;
-module.exports.leaderboard = leaderboardPage;
+module.exports.getLeaderboard = getLeaderboard;
 module.exports.getGod = getGod;

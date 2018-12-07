@@ -33,3 +33,83 @@ const createGuideWindow = function(csrf){
     <Blank/>, document.querySelector("#saveForm")
   );
 };
+
+const createDesignWindow = function(csrf){
+  ReactDOM.render(
+    <DesignWindow csrf={csrf}/>, document.querySelector("#gameGoesHere")
+  );
+  
+  ReactDOM.render(
+    <Blank/>, document.querySelector("#saveForm")
+  );
+};
+
+const DesignWindow = (props) => {
+  return(
+    <div id="guide">
+      <h2>Designing Cthulhu Clicker</h2>
+      <p>
+      Idle clicker games are 
+      </p>
+    </div>
+  );
+};
+
+const createMarketWindow = function(csrf){
+  ReactDOM.render(
+    <MarketWindow csrf={csrf}/>, document.querySelector("#gameGoesHere")
+  );
+  
+  ReactDOM.render(
+    <Blank/>, document.querySelector("#saveForm")
+  );
+};
+
+const MarketWindow = (props) => {
+  return(
+    <div id="guide">
+      <h2>Market</h2>
+    </div>
+  );
+};
+
+const createLeaderboardWindow = function(csrf){
+  ReactDOM.render(
+    <Blank/>, document.querySelector("#saveForm")
+  );
+  
+  loadGodsFromServer();
+};
+
+const GodList = function(props) {
+  if(props.gods.length === 0) {
+    return (
+      <div id="godList">
+        <h3 className="empty">No Players Currently</h3>
+      </div>
+    );
+  }
+  
+  const godNodes = props.gods.map(function(god) {
+    return(
+      <div className="godEntry">
+        <p className="godName"><span className="label">Name:</span> {god.name}</p>
+        <p className="godScore"><span className="label">Total Praise:</span> {Number((god.totalPraise).toFixed(1))}</p>
+      </div>
+    );
+  });
+  
+  return (
+    <div id="godList">
+      {godNodes}
+    </div>
+  );
+};
+
+const loadGodsFromServer = () => {
+  sendAjax('GET', '/getLeaderboard', null, (data) => {
+    ReactDOM.render(
+      <GodList gods={data.gods} />, document.querySelector("#gameGoesHere")
+    );
+  });
+};

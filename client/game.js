@@ -37,6 +37,8 @@ let buff1Element;
 let buff2Element;
 let buff3Element;
 
+let animationFrameStatus;
+
 const update = () => {
   statue.update();
   for(let i = 0; i < shopButtons.length; i++){
@@ -71,7 +73,7 @@ const draw = () =>{
 };
 
 const gameLoop = () => {
-  window.requestAnimationFrame(gameLoop);
+  animationFrameStatus = window.requestAnimationFrame(gameLoop);
   update();
   draw();
 };
@@ -528,6 +530,8 @@ const init = () => {
   buff3Element = document.getElementById('buff3E');
   
   getData();
+  
+  cancelAnimationFrame(animationFrameStatus);
   
   gameLoop();
 };

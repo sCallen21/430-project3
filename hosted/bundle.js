@@ -1,3 +1,56 @@
+"use strict";
+
+var handlePWChange = function handlePWChange(e) {
+  e.preventDefault();
+
+  $("#domoMessage").animate({ width: 'hide' }, 350);
+
+  if ($("#pass").val() == '' || $("#pass2").val() == '') {
+    handleError("All fields are required");
+    return false;
+  }
+
+  sendAjax('POST', $("#changePWForm").attr("action"), $("#changePWForm").serialize(), function (result, status, xhr) {
+    $("#domoMessage").animate({ width: 'hide' }, 350);
+    var messageObj = JSON.parse(xhr.responseText);
+
+    handleError(messageObj.message);
+  });
+
+  return false;
+};
+
+var ChangePWForm = function ChangePWForm(props) {
+  return React.createElement(
+    "form",
+    { id: "changePWForm",
+      onSubmit: handlePWChange,
+      name: "changePWForm",
+      action: "/changePW",
+      method: "POST",
+      className: "mainForm" },
+    React.createElement(
+      "label",
+      { "for": "pass" },
+      "New Password: "
+    ),
+    React.createElement("input", { id: "pass", type: "password", name: "pass", placeholder: "password" }),
+    React.createElement(
+      "label",
+      { "for": "pass2" },
+      "New Password: "
+    ),
+    React.createElement("input", { id: "pass2", type: "password", name: "pass2", placeholder: "retype password" }),
+    React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
+    React.createElement("input", { className: "formSubmit", type: "submit", value: "Change Password" })
+  );
+};
+
+var createChangePWWindow = function createChangePWWindow(csrf) {
+  ReactDOM.render(React.createElement(ChangePWForm, { csrf: csrf }), document.querySelector("#gameGoesHere"));
+
+  ReactDOM.render(React.createElement(Blank, null), document.querySelector("#saveForm"));
+};
 'use strict';
 
 var saveGame = function saveGame(e) {
@@ -104,17 +157,12 @@ var Blank = function Blank() {
 };
 
 var setup = function setup(csrf) {
-  var logoutButton = document.querySelector("#logoutButton");
   var gameButton = document.querySelector("#gameButton");
   var changePWButton = document.querySelector("#changePWButton");
   var guideButton = document.querySelector("#guideButton");
   var leaderboardButton = document.querySelector("#leaderboardButton");
-
-  logoutButton.addEventListener("click", function (e) {
-    e.preventDefault();
-    createlogoutWindow(csrf);
-    return false;
-  });
+  var marketButton = document.querySelector("#marketButton");
+  var designButton = document.querySelector("#designButton");
 
   gameButton.addEventListener("click", function (e) {
     e.preventDefault();
@@ -124,7 +172,7 @@ var setup = function setup(csrf) {
 
   changePWButton.addEventListener("click", function (e) {
     e.preventDefault();
-    createchangePWWindow(csrf);
+    createChangePWWindow(csrf);
     return false;
   });
 
@@ -136,7 +184,19 @@ var setup = function setup(csrf) {
 
   leaderboardButton.addEventListener("click", function (e) {
     e.preventDefault();
-    createleaderboardWindow(csrf);
+    createLeaderboardWindow(csrf);
+    return false;
+  });
+
+  marketButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    createMarketWindow(csrf);
+    return false;
+  });
+
+  designButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    createDesignWindow(csrf);
     return false;
   });
 
@@ -260,6 +320,108 @@ var createGuideWindow = function createGuideWindow(csrf) {
   ReactDOM.render(React.createElement(GuideWindow, { csrf: csrf }), document.querySelector("#gameGoesHere"));
 
   ReactDOM.render(React.createElement(Blank, null), document.querySelector("#saveForm"));
+};
+
+var createDesignWindow = function createDesignWindow(csrf) {
+  ReactDOM.render(React.createElement(DesignWindow, { csrf: csrf }), document.querySelector("#gameGoesHere"));
+
+  ReactDOM.render(React.createElement(Blank, null), document.querySelector("#saveForm"));
+};
+
+var DesignWindow = function DesignWindow(props) {
+  return React.createElement(
+    "div",
+    { id: "guide" },
+    React.createElement(
+      "h2",
+      null,
+      "Designing Cthulhu Clicker"
+    ),
+    React.createElement(
+      "p",
+      null,
+      "Idle clicker games are"
+    )
+  );
+};
+
+var createMarketWindow = function createMarketWindow(csrf) {
+  ReactDOM.render(React.createElement(MarketWindow, { csrf: csrf }), document.querySelector("#gameGoesHere"));
+
+  ReactDOM.render(React.createElement(Blank, null), document.querySelector("#saveForm"));
+};
+
+var MarketWindow = function MarketWindow(props) {
+  return React.createElement(
+    "div",
+    { id: "guide" },
+    React.createElement(
+      "h2",
+      null,
+      "Market"
+    )
+  );
+};
+
+var createLeaderboardWindow = function createLeaderboardWindow(csrf) {
+  ReactDOM.render(React.createElement(Blank, null), document.querySelector("#saveForm"));
+
+  loadGodsFromServer();
+};
+
+var GodList = function GodList(props) {
+  if (props.gods.length === 0) {
+    return React.createElement(
+      "div",
+      { id: "godList" },
+      React.createElement(
+        "h3",
+        { className: "empty" },
+        "No Players Currently"
+      )
+    );
+  }
+
+  var godNodes = props.gods.map(function (god) {
+    return React.createElement(
+      "div",
+      { className: "godEntry" },
+      React.createElement(
+        "p",
+        { className: "godName" },
+        React.createElement(
+          "span",
+          { className: "label" },
+          "Name:"
+        ),
+        " ",
+        god.name
+      ),
+      React.createElement(
+        "p",
+        { className: "godScore" },
+        React.createElement(
+          "span",
+          { className: "label" },
+          "Total Praise:"
+        ),
+        " ",
+        Number(god.totalPraise.toFixed(1))
+      )
+    );
+  });
+
+  return React.createElement(
+    "div",
+    { id: "godList" },
+    godNodes
+  );
+};
+
+var loadGodsFromServer = function loadGodsFromServer() {
+  sendAjax('GET', '/getLeaderboard', null, function (data) {
+    ReactDOM.render(React.createElement(GodList, { gods: data.gods }), document.querySelector("#gameGoesHere"));
+  });
 };
 "use strict";
 

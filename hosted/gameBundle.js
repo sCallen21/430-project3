@@ -43,6 +43,8 @@ var buff1Element = void 0;
 var buff2Element = void 0;
 var buff3Element = void 0;
 
+var animationFrameStatus = void 0;
+
 var update = function update() {
   statue.update();
   for (var i = 0; i < shopButtons.length; i++) {
@@ -77,7 +79,7 @@ var draw = function draw() {
 };
 
 var gameLoop = function gameLoop() {
-  window.requestAnimationFrame(gameLoop);
+  animationFrameStatus = window.requestAnimationFrame(gameLoop);
   update();
   draw();
 };
@@ -582,6 +584,8 @@ var init = function init() {
   buff3Element = document.getElementById('buff3E');
 
   getData();
+
+  cancelAnimationFrame(animationFrameStatus);
 
   gameLoop();
 };

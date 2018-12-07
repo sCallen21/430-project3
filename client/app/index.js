@@ -6,17 +6,12 @@ const Blank = () => {
 };
 
 const setup = (csrf) => {
-  const logoutButton = document.querySelector("#logoutButton");
   const gameButton = document.querySelector("#gameButton");
   const changePWButton = document.querySelector("#changePWButton");
   const guideButton = document.querySelector("#guideButton");
   const leaderboardButton = document.querySelector("#leaderboardButton");
-  
-  logoutButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    createlogoutWindow(csrf);
-    return false;
-  });
+  const marketButton = document.querySelector("#marketButton");
+  const designButton = document.querySelector("#designButton");
   
   gameButton.addEventListener("click", (e) => {
     e.preventDefault();
@@ -26,7 +21,7 @@ const setup = (csrf) => {
   
   changePWButton.addEventListener("click", (e) => {
     e.preventDefault();
-    createchangePWWindow(csrf);
+    createChangePWWindow(csrf);
     return false;
   });
   
@@ -38,7 +33,19 @@ const setup = (csrf) => {
   
   leaderboardButton.addEventListener("click", (e) => {
     e.preventDefault();
-    createleaderboardWindow(csrf);
+    createLeaderboardWindow(csrf);
+    return false;
+  });
+  
+  marketButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    createMarketWindow(csrf);
+    return false;
+  });
+  
+  designButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    createDesignWindow(csrf);
     return false;
   });
   

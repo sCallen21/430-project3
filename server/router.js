@@ -15,7 +15,7 @@ const router = (app) => {
   app.post('/game', mid.requiresLogin, controllers.ElderGod.newGame);
   app.post('/gameSave', mid.requiresLogin, controllers.ElderGod.saveGame);
   // app.get('/rules', mid.requiresLogin, controllers.Account.rules);
-  // app.get('/leaderboard', mid.requiresLogin, controllers.ElderGod.leaderboard);
+  app.get('/getLeaderboard', mid.requiresLogin, controllers.ElderGod.getLeaderboard);
   app.get('/getData', mid.requiresLogin, controllers.ElderGod.getData);
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.get('/*', controllers.Account.notFound);
