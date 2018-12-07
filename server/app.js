@@ -1,3 +1,24 @@
+const cluster = require('cluster');
+
+if(cluster.isMaster){
+  //code to run if inside master process
+  
+  //gets number of cpus on the machine
+  const cpuCount = require('os').cpus().length;
+  
+  //creates a worker for each cpu on the machine
+  for(let i = 0; i < cpuCount; i++){
+    cluster.fork();
+  }
+  
+  //listens for dead workers
+  cluster.on('exit', (worker) => {
+    //replace the dead worker
+    cluster.fork();
+  });
+} else {
+  //code to run if inside a worker process
+  
 const path = require('path');
 const express = require('express');
 const compression = require('compression');
@@ -83,3 +104,5 @@ app.listen(port, (err) => {
   }
   console.log(`Listening on port ${port}`);
 });
+  
+} //ends else for clustering
