@@ -340,7 +340,42 @@ var DesignWindow = function DesignWindow(props) {
     React.createElement(
       "p",
       null,
-      "Idle clicker games are"
+      "Idle clicker games are an interesting phenomenon. They certainly aren't popular with everyone, but those that do enjoy them like steady progression and feeling that the rewards for progressing are worth the time they spend accumulating points. I kept these things in mind not only with the thematic and mechanical design of the game but also when brainstorming ways to extend this app into the future."
+    ),
+    React.createElement(
+      "h3",
+      null,
+      "Thematic Design"
+    ),
+    React.createElement(
+      "p",
+      null,
+      "From the beginning of the development process I knew I wanted to theme the game around the Cthulhu mythos. The idea that you are a fledgeling alien god trying to gain influence with humans seemed like a perfect setting to idle through accumulating points."
+    ),
+    React.createElement(
+      "p",
+      null,
+      "The visual designs and descriptions I wrote in the guide embody the progression aspect of the idle game genre. At this stage in the app's design, gaining enough points to purchase a new tier of creature is its own reward. The reward of the \"unknown\" monsters becoming known reflects the themes of the cosmic horror genre as well. This isn't to say that is the only reward possible for this style of game."
+    ),
+    React.createElement(
+      "h3",
+      null,
+      "Looking Forward"
+    ),
+    React.createElement(
+      "p",
+      null,
+      "The first thing I would do if I were to extend this app, I would implement a feature for players to look forward to after accumulating enough points. My first and most major thought for this would be to create a battle system between players. Players could start matches between each other and the types of monsters they have purchased could provide different abilities for them to use. To accent the nature of idle games not holding their players full attentions, the battles would be turn based and each turn would wait to progress until each player made their move. The app could even notify each player if their turn is up. This battle system would add a lot more competition to the app on top of the leaderboard I already have implemented."
+    ),
+    React.createElement(
+      "h3",
+      null,
+      "Marketability"
+    ),
+    React.createElement(
+      "p",
+      null,
+      "This app has quite a lot of opportunity for marketing. There is plenty of real estate around the pages for unintrusive ads, and for playes who do not desire to simply wait for their points to accumulate, they can purchase different buffs from the marketplace to speed up their progress. If the battle system were to be implemented this could greatly expand the kinds of buffs players could purchase."
     )
   );
 };
@@ -359,7 +394,98 @@ var MarketWindow = function MarketWindow(props) {
       "h2",
       null,
       "Market"
-    )
+    ),
+    React.createElement(
+      "section",
+      { className: "shopItem" },
+      React.createElement(
+        "span",
+        { className: "shopName" },
+        "2000 praise"
+      ),
+      React.createElement("br", null),
+      React.createElement(
+        "span",
+        { className: "price" },
+        "$1.99"
+      )
+    ),
+    React.createElement(
+      "section",
+      { className: "shopItem" },
+      React.createElement(
+        "span",
+        { className: "shopName" },
+        "10000 praise"
+      ),
+      React.createElement("br", null),
+      React.createElement(
+        "span",
+        { className: "price" },
+        "$7.99"
+      )
+    ),
+    React.createElement(
+      "section",
+      { className: "shopItem" },
+      React.createElement(
+        "span",
+        { className: "shopName" },
+        "50000 praise"
+      ),
+      React.createElement("br", null),
+      React.createElement(
+        "span",
+        { className: "price" },
+        "$19.99"
+      )
+    ),
+    React.createElement(
+      "section",
+      { className: "shopItem" },
+      React.createElement(
+        "span",
+        { className: "shopName" },
+        "5 Elder Things"
+      ),
+      React.createElement("br", null),
+      React.createElement(
+        "span",
+        { className: "price" },
+        "$9.99"
+      )
+    ),
+    React.createElement(
+      "section",
+      { className: "shopItem" },
+      React.createElement(
+        "span",
+        { className: "shopName" },
+        "1 hour of speedy worship"
+      ),
+      React.createElement("br", null),
+      React.createElement(
+        "span",
+        { className: "price" },
+        "$1.99"
+      )
+    ),
+    React.createElement(
+      "section",
+      { className: "shopItem" },
+      React.createElement(
+        "span",
+        { className: "shopName" },
+        "5 hours of speedy worship"
+      ),
+      React.createElement("br", null),
+      React.createElement(
+        "span",
+        { className: "price" },
+        "$1.99"
+      )
+    ),
+    React.createElement("section", { className: "spanner" })
   );
 };
 
@@ -423,11 +549,16 @@ var loadGodsFromServer = function loadGodsFromServer() {
     ReactDOM.render(React.createElement(GodList, { gods: data.gods }), document.querySelector("#gameGoesHere"));
   });
 };
+
+$(document).on('click', '.shopItem', function () {
+  handleError("Market not implemented yet");
+});
 "use strict";
 
 var handleError = function handleError(message) {
   $("#errorMessage").text(message);
   $("#domoMessage").animate({ width: 'toggle' }, 350);
+  $("#domoMessage").delay(900).animate({ width: 'hide' }, 350);
 };
 
 var redirect = function redirect(response) {
